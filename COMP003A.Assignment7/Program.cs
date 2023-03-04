@@ -6,6 +6,8 @@
  * 
  */
 
+using System;
+
 namespace COMP003A.Assignment7
 {
     internal class Program
@@ -35,6 +37,16 @@ namespace COMP003A.Assignment7
             Console.Write("Is "); ChangeColor(gimmieWord, 13); Console.Write(" a palindrome? ");
             IsPalindrome(gimmieWord);
 
+
+            /**************************/
+            PrintSeparator("List — Add Section",'*');
+            List<string> theList = ListAdd("name");
+            
+            PrintSeparator("List — Traversal Section", '*');
+            ListTraversal(theList, true);
+            ListTraversal(theList,false);
+
+
         }
 
 
@@ -58,34 +70,83 @@ namespace COMP003A.Assignment7
         }
 
 
-
+        /// <summary>
+        /// Method to test if something is a palindrome
+        /// </summary>
+        /// <param name="word">String Input</param>
+        ///<returns></returns>
         static void IsPalindrome(string word)
         {
             string reversedWord = "";
-            Console.WriteLine($"This is: {reversedWord}");
-            Console.WriteLine($"This is: {word}");
 
-            for(int i = (word.Length)-1; i == 0; i--)
+            for(int i = (word.Length)-1; i >= 0; i--)
             {
-                reversedWord = reversedWord + Convert.ToString(word[i]);
-                Console.WriteLine($"Here is: {reversedWord}");
+                reversedWord = reversedWord + word[i];
                 
             }
+            
 
-            if(String.Equals(word, reversedWord))
+            if(String.Equals(word.ToLower(), reversedWord.ToLower()))
             {
-                Console.Write("True");
+                Console.Write("True!\n");
             }
             else
             {
-                Console.Write("False");
+                Console.Write("False!\n");
             }
         }
 
 
+        ///<summary>Method to Add List Items</summary>
+        ///<param name="label">String input for what the list is (singular)</param>
+        ///<returns>List</returns>
+        static List<string> ListAdd(string label)
+        {
+            char exitGuy = 'a';
+            List<string> namesList = new List<string>();
+
+            do
+            {
+                Console.Write($"\nEnter a {label}: ");
+                string userInput = Console.ReadLine();
+
+                namesList.Add(userInput);
+
+                Console.Write("Press (e) to escape, press any key to add more: ");
+                exitGuy = Convert.ToChar(Console.ReadLine());
+
+            } while(!Char.Equals(exitGuy,'e'));
+
+            return namesList;
+        }
 
 
+        ///<summary>
+        ///Prints a list in its input order or its reverse
+        ///</summary>
+        ///<param name="names">Input list</param>
+        ///<param name="forwards">Boolean input, true to iterate forwards</param>
+        static void ListTraversal(List<string> names, bool forwards)
+        {
+            string phrase = "";
+            if(!forwards)
+            {
+                names.Reverse();
+                phrase = "backwards";
+            }
+            else
+            {
+                phrase = "forwards";
+            }
 
+            Console.WriteLine($"\nHere's your list {phrase}!");
+
+            foreach(var item in names)
+            {
+                Console.WriteLine(item);
+            }
+            
+        }
 
 
 
